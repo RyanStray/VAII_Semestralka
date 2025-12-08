@@ -141,3 +141,69 @@
         @apply bg-background text-foreground;
     }
 }
+
+.save-button {
+    background-color: lightgreen;
+    color: black;
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 0.55rem;
+    cursor: pointer;
+}
+
+.save-button:hover {
+    background-color: #55cc55;
+}
+
+.dark .save-button {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 0.55rem;
+    cursor: pointer;
+}
+
+.dark .save-button:hover {
+    background-color: darkgreen;
+}
+
+.cancel-button {
+    background-color: transparent;
+    color:var(--foreground) ;
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 0.55rem;
+    cursor: pointer;
+}
+
+.cancel-button:hover {
+    background-color:#ffaaaa;
+    color:black ;
+}
+
+.dark .cancel-button:hover {
+    background-color:#550000;
+    color:white ;
+}
+
+.nav-button {
+    background-color: rgba(128, 128, 128, 0.2);
+    color:var(--foreground) ;
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 0.55rem;
+    cursor: pointer;
+}
+
+.nav-button:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+    color:black ;
+}
+
+.dark .nav-button:hover {
+    background-color: rgba(128, 128, 128, 0.5);
+    color:white ;
+}
+
+

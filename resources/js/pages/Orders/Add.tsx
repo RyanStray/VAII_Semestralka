@@ -8,6 +8,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { route } from 'ziggy-js';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { TriangleAlert } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -22,12 +24,13 @@ export default function Index() {
         productID: "",
         transactionID: "",
         price: "",
-        wasPayed: false,
+        //wasPayed: false,
         description: ""});
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         post(route('orders.store'));
+        //console.log("1");
         //console.log(data); //Save data
     };
 
@@ -38,6 +41,20 @@ export default function Index() {
 
             <div className="w-8/12 p-4">
                 <form onSubmit={handleSubmit} className="space-y-4">
+
+                    {Object.keys(errors).length > 0 &&(
+                        <Alert>
+                            <TriangleAlert />
+                            <AlertTitle>Required field missing!</AlertTitle>
+                            <AlertDescription>
+                                <ul>
+                                    {Object.entries(errors).map(([key, message]) => (
+                                        <li key = {key}>{message}</li>
+                                    ))}
+                                </ul>
+                            </AlertDescription>
+                        </Alert>
+                    )}
                     <div>
                         <Label htmlFor="Order">Order ID</Label>
                         <Input placeholder="XXX" value={data.orderID}
@@ -76,9 +93,9 @@ export default function Index() {
                                   onChange={(e) => setData('description', e.target.value)}></Textarea>
                     </div>
 
-                    <Button className="m-2" type="submit" color="green">Save</Button>
+                    <Button className="m-2" type="submit" class="save-button">Save</Button>
 
-                    <Link href="/orders"><Button className="m-2">Cancel</Button></Link>
+                    <Link href="/orders"><Button className="m-2" class="cancel-button" >Cancel</Button></Link>
 
                 </form>
             </div>

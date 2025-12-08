@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Orders;
+use http\Message;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class DataController extends Controller
 {
     public function orders() {
-        return Inertia::render('Orders/Index', []);
+        $orders = Orders::all();
+        return Inertia::render('Orders/Index', compact('orders'));
     }
 
     public function customers() {
@@ -34,12 +37,16 @@ class DataController extends Controller
     public function storeOrder(Request $request)
     {
         //dd($request); //dump data
+
         $request->validate([
             'orderID' =>  'required|string|max:255|unique:orders',
-            'transactionID' =>  'string|max:255|unique:orders',
-            'productID' =>  'string|max:255|unique:orders',
+            'transactionID' =>  'nullable|unique:orders',
+            'productID' =>  'nullable|unique:orders',
             'price' =>  'required|numeric',
             'description' =>  'nullable|string',
         ]);
+
+        Orders::create($request->all());
+        return redirect()->route('Orders.Index')->with('message', 'Order created successfully.');
     }
 }

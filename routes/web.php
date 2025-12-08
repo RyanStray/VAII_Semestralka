@@ -32,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     Route::post('/orders', [DataController::class, 'storeOrder'] ) -> name('orders.store');
+
 });
 
 require __DIR__.'/settings.php';

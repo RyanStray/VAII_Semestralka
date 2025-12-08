@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
 
             $table->string('orderID');
-            $table->string('productID');
-            $table->string('transactionID');
+            $table->string('productID') ->nullable();
+            $table->string('transactionID') ->nullable();
             $table->decimal('price', 10, 2);
-            //$table->boolean('wasPayed')
-            $table->string('description') ->nullable();
+            $table->boolean('wasPayed') ->default(false);
+            $table->text('description') ->nullable();
 
             $table->timestamps();
         });
