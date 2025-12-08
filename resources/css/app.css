@@ -206,4 +206,27 @@
     color:white ;
 }
 
+.delete-button {
+    background-color: rgba(255, 0, 0, 0.2);
+    color:var(--foreground) ;
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 0.55rem;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: rgba(255, 0, 0, 0.3);
+    color:var(--foreground) ;
+}
+
+.selected-row {
+    background-color: rgba(120, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.selected-row:hover {
+    background-color: rgba(120, 0, 0, 0.4);
+}
+
 

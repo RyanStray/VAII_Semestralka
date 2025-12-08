@@ -13,8 +13,8 @@ import { TriangleAlert } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Add Order',
-        href: '/orders/add',
+        title: 'Edit Order',
+        href: '/orders/edit',
     },
 ];
 

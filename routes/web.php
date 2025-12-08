@@ -25,14 +25,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/customers/add', [DataController::class, 'customersAdd'] ) -> name('Customers.Add');
     Route::get('/invoice/add', [DataController::class, 'invoiceAdd'] ) -> name('Invoice.Add');
 
-
     Route::get('/company', [CompanyController::class, 'index'] ) -> name('Company.Index');
     Route::get('/employees', [EmployeesController::class, 'index'] ) -> name('Employees.Index');
 
-
-
     Route::post('/orders', [DataController::class, 'storeOrder'] ) -> name('orders.store');
+    Route::delete('/orders/delete/{order}', [DataController::class, 'destroyOrder'] ) -> name('orders.delete');
+    Route::get('/orders/edit/{order}', [DataController::class, 'editOrder'] ) -> name('orders.edit');
 
 });
+
 
 require __DIR__.'/settings.php';

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Orders;
-use http\Message;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -47,6 +46,16 @@ class DataController extends Controller
         ]);
 
         Orders::create($request->all());
-        return redirect()->route('Orders.Index')->with('message', 'Order created successfully.');
+        return redirect()->route('Orders.Index')->with('message', 'Order successfully saved.');
+    }
+
+    public function editOrder(Order $order)
+    {
+        return Inertia::render('Edit/Orders', compact('order') []);
+    }
+
+    public function destroyOrder(Order $order) {
+        $order -> delete();
+        return redirect()->route('Orders.Index')->with('message', 'Order deleted successfully.');
     }
 }
