@@ -51,7 +51,7 @@ class DataController extends Controller
 
     public function editOrder(Order $order)
     {
-        return Inertia::render('Edit/Orders', compact('order') []);
+        return Inertia::render('Orders/Edit', compact('order'));
     }
 
     public function destroyOrder(Order $order) {

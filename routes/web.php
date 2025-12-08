@@ -29,7 +29,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/employees', [EmployeesController::class, 'index'] ) -> name('Employees.Index');
 
     Route::post('/orders', [DataController::class, 'storeOrder'] ) -> name('orders.store');
+
     Route::delete('/orders/delete/{order}', [DataController::class, 'destroyOrder'] ) -> name('orders.delete');
+
     Route::get('/orders/edit/{order}', [DataController::class, 'editOrder'] ) -> name('orders.edit');
 
 });
