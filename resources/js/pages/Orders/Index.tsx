@@ -102,7 +102,7 @@ export default function Index() {
                                     <TableCell>{order.description}</TableCell>
                                     <TableCell className="text-right">{order.wasPayed  ?  'yes' : 'no'}</TableCell>
                                     <TableCell className='space-x-1'>
-                                        <Link href = {route(orders.edit, order.id)}><Button className='nav-button'>Edit</Button></Link>
+                                        <Link href = {route('orders.edit', order.id)}><Button className='nav-button'>Edit</Button></Link>
                                     </TableCell>
                                     <TableCell><Button disabled={processing} onClick={() => handleDelete(order.id, order.orderID)} className='delete-button'>Delete</Button></TableCell>
                                 </TableRow >
