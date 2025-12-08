@@ -67,7 +67,8 @@ export default function Index() {
             </div>
 
             <div className='m-6'>
-                <Link href="/orders/add"><Button className='nav-button'>Add new Order</Button></Link>
+                <Link href={route('orders.add')}><Button className='nav-button'>Add new Order</Button></Link>
+                {/*<Link href="/orders/add"><Button className='nav-button'>Add new Order</Button></Link>*/}
                 {/*<Button className='nav-button'>Edit Order</Button>
                 <Button className='delete-button' onClick={(e) => handleDelete(e, selectedLine)}>Delete Order</Button>*/}
             </div>

@@ -93,9 +93,9 @@ export default function Index() {
                                   onChange={(e) => setData('description', e.target.value)}></Textarea>
                     </div>
                     <div className='space-x-1'>
-                        <Button className="m-2" type="submit" class="save-button">Save</Button>
+                        <Button className="save-button m-2">Save</Button>
 
-                        <Link href="/orders"><Button className="m-2" class="cancel-button" >Cancel</Button></Link>
+                        <Link href="/orders"><Button className="cancel-button m-2" >Cancel</Button></Link>
                     </div>
 
                 </form>

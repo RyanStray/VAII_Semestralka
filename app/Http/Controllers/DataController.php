@@ -6,6 +6,7 @@ use App\Models\Orders;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
+
 class DataController extends Controller
 {
     public function orders() {
@@ -49,12 +50,12 @@ class DataController extends Controller
         return redirect()->route('Orders.Index')->with('message', 'Order successfully saved.');
     }
 
-    public function editOrder(Order $order)
+    public function editOrder(Orders $order)
     {
         return Inertia::render('Orders/Edit', compact('order'));
     }
 
-    public function destroyOrder(Order $order) {
+    public function destroyOrder(Orders $order) {
         $order -> delete();
         return redirect()->route('Orders.Index')->with('message', 'Order deleted successfully.');
     }
