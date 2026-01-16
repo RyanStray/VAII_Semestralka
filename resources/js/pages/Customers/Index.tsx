@@ -1,8 +1,19 @@
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
+import { Alert, AlertTitle } from '@/components/ui/alert';
+import { ThumbsUp  } from 'lucide-react';
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table"
+import { route } from 'ziggy-js';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -11,39 +22,77 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
+interface props{
+    flash: {
+        message?:string
+    }
+    customers: Customers[]
+}
+
+interface Customers{
+    id: number
+    name: string
+    surname: string
+}
+
 export default function Index() {
+
+    const {processing, delete: destroy } = useForm();
+
+    const handleDelete= (id: number, surname: string) => {
+        if (confirm("Are you sure you want to remove customer: " + surname + "?")) {
+            destroy('/customers/delete/' + id);
+        }
+    }
+
+    const {customers, flash} = usePage().props as props;
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Customers" />
 
-            <div className='m-6'>
-                <Link href="/customers/add"><Button>Add new Customer</Button></Link>
+            <div>
+                {flash.message && (
+                    <Alert>
+                        <ThumbsUp />
+                        <AlertTitle>{flash.message}</AlertTitle>
+                    </Alert>
+                )}
             </div>
 
-            <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div
-                        className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern
-                            className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div
-                        className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern
-                            className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div
-                        className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern
-                            className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                </div>
-                <div
-                    className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                    <PlaceholderPattern
-                        className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                </div>
+            <div className='m-6'>
+                <Link href={route('customers.add')}><Button className='nav-button'>Add new Customer</Button></Link>
+            </div>
+            <div className='m-2'>
+                {customers.length > 0 && (
+                    <Table>
+                        <TableCaption>A list of your Customers.</TableCaption>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>#</TableHead>
+                                <TableHead>Name</TableHead>
+                                <TableHead>Surname</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {customers.map((customers) => (
+                                <TableRow >
+                                    <TableCell className="font-medium">{customers.id}.</TableCell>
+
+                                    <TableCell>{customers.name}</TableCell>
+                                    <TableCell>{customers.surname}</TableCell>
+                                    <TableCell className='space-x-1'>
+                                        <Link href = {route('customers.edit', customers.id)}><Button className='nav-button'>Edit</Button></Link>
+                                    </TableCell>
+                                    <TableCell><Button disabled={processing} onClick={() => handleDelete(customers.id, customers.name +  " " + customers.surname)} className='delete-button'>Delete</Button></TableCell>
+                                </TableRow >
+                            ))}
+
+                        </TableBody>
+                    </Table>
+                )}
             </div>
         </AppLayout>
     );
 }
+

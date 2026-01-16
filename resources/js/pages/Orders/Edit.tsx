@@ -1,7 +1,7 @@
 
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -9,6 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { route } from 'ziggy-js';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+
 import { TriangleAlert } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -18,26 +19,41 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
+interface Order{
+    id: number
+    orderID: string
+    productID: string
+    transactionID: string
+    price: number
+    wasPayed: boolean
+    description: string
+}
+
+interface PageProps {
+    order: Order
+}
+
 export default function Index() {
-    const {data, setData, post, processing, errors } = useForm({
-        orderID: "",
-        productID: "",
-        transactionID: "",
-        price: "",
-        //wasPayed: false,
-        description: ""});
+
+    const { order } = usePage().props as { order: Order }
+
+    const {data, setData, put, processing, errors } = useForm({
+        orderID: order.orderID,
+        productID: order.productID ?? '',
+        transactionID: order.transactionID ?? '',
+        price: order.price,
+        wasPayed: order.wasPayed,
+        description: order.description ?? ''});
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        post(route('orders.store'));
-        //console.log("1");
-        //console.log(data); //Save data
+        put(route('orders.update', order.id));
     };
 
     return (
 
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Add Order" />
+            <Head title="Edit Order" />
 
             <div className="w-8/12 p-4">
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -49,7 +65,7 @@ export default function Index() {
                             <AlertDescription>
                                 <ul>
                                     {Object.entries(errors).map(([key, message]) => (
-                                        <li key = {key}>{message}</li>
+                                        <li key = {key}>{message.replace(" i d ", " ID ")}</li>
                                     ))}
                                 </ul>
                             </AlertDescription>

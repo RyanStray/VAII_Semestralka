@@ -1,7 +1,7 @@
 
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -9,35 +9,46 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { route } from 'ziggy-js';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+
 import { TriangleAlert } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Add Order',
-        href: '/orders/add',
+        title: 'Edit Customer',
+        href: '/customers/edit',
     },
 ];
 
+interface Customer{
+    id: number
+    name: string
+    surename: string
+    description: string
+}
+
+interface PageProps {
+    customer: Customer
+}
+
 export default function Index() {
-    const {data, setData, post, processing, errors } = useForm({
-        orderID: "",
-        productID: "",
-        transactionID: "",
-        price: "",
-        wasPayed: false,
-        description: ""});
+
+    const { customer } = usePage().props as { customer: Customer }
+
+    const {data, setData, put, processing, errors } = useForm({
+        id: customer.id,
+        name: customer.name,
+        surename: customer.surename ?? '',
+        description: customer.description ?? ''});
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        post(route('orders.store'));
-        //console.log("1");
-        //console.log(data); //Save data
+        put(route('customers.update', customers.id));
     };
 
     return (
 
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Add Order" />
+            <Head title="Edit Customer" />
 
             <div className="w-8/12 p-4">
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -56,37 +67,16 @@ export default function Index() {
                         </Alert>
                     )}
                     <div>
-                        <Label htmlFor="Order">Order ID</Label>
-                        <Input placeholder="XXX" value={data.orderID}
-                               onChange={(e) => setData('orderID', e.target.value)}></Input>
+                        <Label htmlFor="Customer">Name</Label>
+                        <Input placeholder="XXX" value={data.name}
+                               onChange={(e) => setData('name', e.target.value)}></Input>
                     </div>
 
                     <div>
-                        <Label htmlFor="Product ID">Product ID</Label>
-                        <Input placeholder="XXX" value={data.productID}
-                               onChange={(e) => setData('productID', e.target.value)}></Input>
+                        <Label htmlFor="Product ID">Surename</Label>
+                        <Input placeholder="XXX" value={data.surename}
+                               onChange={(e) => setData('Surename', e.target.value)}></Input>
                     </div>
-
-                    <div>
-                        <Label htmlFor="Transaction ID">Transaction ID</Label>
-                        <Input placeholder="XXX" value={data.transactionID}
-                               onChange={(e) => setData('transactionID', e.target.value)}></Input>
-                    </div>
-
-                    <div>
-                        <Label htmlFor="Price">Order Price</Label>
-                        <Input placeholder="0,0€" value={data.price}
-                               onChange={(e) => setData('price', e.target.value)}></Input>
-                    </div>
-
-                    <div>
-                        <Label htmlFor="Was payed">Was payed</Label>
-
-                        <div className="m-1"><Checkbox defaultChecked={data.wasPayed}
-                                                       onChange={(e) => setData('wasPayed', e.target.value)}></Checkbox>
-                        </div>
-                    </div>
-
                     <div>
                         <Label htmlFor="Description">Description</Label>
                         <Textarea placeholder="Description" value={data.description}
@@ -95,7 +85,7 @@ export default function Index() {
                     <div className='space-x-1'>
                         <Button className="save-button m-2">Save</Button>
 
-                        <Link href="/orders"><Button className="cancel-button m-2" >Cancel</Button></Link>
+                        <Link href="/customers"><Button className="cancel-button m-2" >Cancel</Button></Link>
                     </div>
 
                 </form>

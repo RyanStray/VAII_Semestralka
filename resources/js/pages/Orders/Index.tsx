@@ -29,7 +29,7 @@ interface props{
     orders: Orders[]
 }
 
-interface orders{
+interface Orders{
     id: number
     orderID: string
     productID: string
