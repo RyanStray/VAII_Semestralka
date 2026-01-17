@@ -92,6 +92,14 @@ export default function Index() {
                         <Textarea placeholder="Description" value={data.description}
                                   onChange={(e) => setData('description', e.target.value)}></Textarea>
                     </div>
+
+                    <div>
+
+
+
+
+                    </div>
+
                     <div className='space-x-1'>
                         <Button className="save-button m-2">Save</Button>
 

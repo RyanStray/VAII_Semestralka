@@ -13,6 +13,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+
 import { route } from 'ziggy-js';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -31,9 +32,17 @@ interface props{
 
 interface Customers{
     id: number
-    name: string
-    surname: string
-}
+    title: string,
+    name: string,
+    surname: string,
+
+    email: string,
+    phone: string,
+
+    company: string,
+    position: string,
+
+    description: string};
 
 export default function Index() {
 
@@ -71,7 +80,9 @@ export default function Index() {
                             <TableRow>
                                 <TableHead>#</TableHead>
                                 <TableHead>Name</TableHead>
-                                <TableHead>Surname</TableHead>
+                                <TableHead>email</TableHead>
+                                <TableHead>phone</TableHead>
+                                <TableHead>company</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -79,8 +90,10 @@ export default function Index() {
                                 <TableRow >
                                     <TableCell className="font-medium">{customers.id}.</TableCell>
 
-                                    <TableCell>{customers.name}</TableCell>
-                                    <TableCell>{customers.surname}</TableCell>
+                                    <TableCell>{customers.title + " " +  customers.name + " " + customers.surname}</TableCell>
+                                    <TableCell>{customers.email}</TableCell>
+                                    <TableCell>{customers.phone}</TableCell>
+                                    <TableCell>{customers.company}</TableCell>
                                     <TableCell className='space-x-1'>
                                         <Link href = {route('customers.edit', customers.id)}><Button className='nav-button'>Edit</Button></Link>
                                     </TableCell>

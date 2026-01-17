@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Orders;
+use App\Models\Customers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -28,11 +29,11 @@ class DataController extends Controller
     }
 
     public function customersAdd() {
-        return Inertia::render('Customers/add', []);
+        return Inertia::render('Customers/Add', []);
     }
 
     public function invoiceAdd() {
-        return Inertia::render('Invoice/add', []);
+        return Inertia::render('Invoice/Add', []);
     }
 
 
@@ -85,18 +86,32 @@ class DataController extends Controller
 
     //===================================================    Customers   ===============================================================
 
-    public function storeCustomer(Request $request)
+    public function storeCustomers(Request $request)
     {
         //dd($request); //dump data
 
         $request->validate([
+            'title' =>  'nullable|string|max:50',
             'name' =>  'required|string|max:255',
-            'surename' =>  'required|string|max:255',
+            'surname' =>  'required|string|max:255',
+
+            'email' =>  'nullable|email:rfc,dns|string|max:255|unique:customers',
+            'phone' => [
+                'nullable',
+                'regex:/^[0-9+\s]+$/',
+                'min:6',
+                'max:30',
+                'unique:customers',
+            ],
+
+            'company' =>  'nullable|string|max:255',
+            'position' =>  'nullable|string|max:255',
+
             'description' =>  'nullable|string',
         ]);
 
-        Customer::create($request->all());
-        return redirect()->route('customer.index')->with('message', 'Customer successfully saved.');
+        Customers::create($request->all());
+        return redirect()->route('customers.index')->with('message', 'Customer successfully saved.');
     }
 
     public function customerUpdate(Request $request, Customers $customer)
@@ -104,8 +119,22 @@ class DataController extends Controller
         //dd($request);
 
         $request->validate([
+            'title' =>  'nullable|string|max:50',
             'name' =>  'required|string|max:255',
-            'surename' =>  'required|string|max:255',
+            'surname' =>  'required|string|max:255',
+
+            'email' =>  'nullable|email:rfc,dns|string|max:255|unique:customers,email,' . $customer->id,
+            'phone' => [
+                    'nullable',
+                    'regex:/^[0-9+\s]+$/',
+                    'min:6',
+                    'max:30',
+                    'unique:customers,phone,' . $customer->id,
+                ],
+
+            'company' =>  'nullable|string|max:255',
+            'position' =>  'nullable|string|max:255',
+
             'description' =>  'nullable|string',
         ]);
 
@@ -122,7 +151,7 @@ class DataController extends Controller
 
     public function destroyCustomer(Customers $customer) {
         $customer -> delete();
-        return redirect()->route('customer.index')->with('message', 'Customer deleted successfully.');
+        return redirect()->route('customers.index')->with('message', 'Customer deleted successfully.');
     }
 
 }
