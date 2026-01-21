@@ -49,6 +49,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/customers/edit/{customer}', [DataController::class, 'editCustomer'] ) -> name('customers.edit');
     Route::put('/customers/{customer}', [DataController::class, 'customerUpdate'] ) -> name('customers.update');
+
+
+    Route::get('/api/customers', [DataController::class, 'getCustomers']);
 });
 
 

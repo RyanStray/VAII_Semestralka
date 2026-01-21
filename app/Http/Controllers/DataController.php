@@ -47,6 +47,7 @@ class DataController extends Controller
             'orderID' =>  'required|string|max:255|unique:orders',
             'transactionID' =>  'nullable|unique:orders',
             'productID' =>  'nullable|unique:orders',
+            'wasPayed' =>  'nullable|boolean',
             'price' =>  'required|numeric',
             'description' =>  'nullable|string',
         ]);
@@ -111,7 +112,12 @@ class DataController extends Controller
         ]);
 
         Customers::create($request->all());
-        return redirect()->route('customers.index')->with('message', 'Customer successfully saved.');
+
+        if (Route::currentRouteName() === 'customers.add') {
+            return redirect()->route('customers.index')
+                ->with('message', 'Customer successfully saved.');
+        }
+        return redirect()->back()->with('message', 'Customer successfully saved.');
     }
 
     public function customerUpdate(Request $request, Customers $customer)
@@ -152,6 +158,11 @@ class DataController extends Controller
     public function destroyCustomer(Customers $customer) {
         $customer -> delete();
         return redirect()->route('customers.index')->with('message', 'Customer deleted successfully.');
+    }
+
+    public function getCustomers()
+    {
+        return Customers::select('id', 'title', 'name', 'surname')->get();
     }
 
 }

@@ -18,5 +18,7 @@ class Customers extends Model
         'position',
 
         'description',
+
+        'companyID',
     ];
 }

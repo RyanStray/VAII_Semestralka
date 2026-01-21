@@ -15,5 +15,7 @@ class Orders extends Model
         'wasPayed',
         'price',
         'description',
+
+        'companyID',
     ];
 }
