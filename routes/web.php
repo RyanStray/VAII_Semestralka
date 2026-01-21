@@ -14,14 +14,11 @@ Route::get('/', function () {
 })->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
-    Route::get('/invoice', [DataController::class, 'invoice'] ) -> name('invoice.index');
 
-    Route::get('/invoice/add', [DataController::class, 'invoiceAdd'] ) -> name('invoice.add');
-
-    Route::get('/company', [CompanyController::class, 'index'] ) -> name('company.index');
     Route::get('/employees', [EmployeesController::class, 'index'] ) -> name('employees.index');
 
     //===================================================    Oreders   ===============================================================
@@ -52,6 +49,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     Route::get('/api/customers', [DataController::class, 'getCustomers']);
+
+
+
+    //===================================================    Companies   ===============================================================
+
+
+    Route::get('/company', [CompanyController::class, 'index'] ) -> name('company.index');
+    Route::get('/company/add', [CompanyController::class, 'add'] ) -> name('company.add');
+
+    Route::post('/company', [CompanyController::class, 'storeCompany'] ) -> name('company.store');
+
+    Route::delete('/company/delete/{company}', [CompanyController::class, 'destroyCompany'] ) -> name('company.delete');
+
+    Route::get('/company/edit/{company}', [CompanyController::class, 'editCompany'] ) -> name('company.edit');
+    Route::put('/company/{company}', [CompanyController::class, 'updateCompany'] ) -> name('company.update');
+
 });
 
 

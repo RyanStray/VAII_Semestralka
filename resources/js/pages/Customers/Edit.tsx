@@ -53,7 +53,7 @@ interface PageProps {
 
 export default function Index() {
 
-    const { customer } = usePage().props as { customer: Customer }
+    const { customer } = usePage<PageProps>().props
 
     const {data, setData, put, processing, errors } = useForm({
         title: customer.title ?? '',

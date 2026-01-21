@@ -201,7 +201,7 @@ export default function Index() {
     const [customers, setCustomers] = useState<Customer[]>([])
     const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null)
 
-    const { order } = usePage().props as { order: Order }
+    const { order } = usePage<PageProps>().props
 
     const {data, setData, put, processing, errors } = useForm({
         orderID: order.orderID,
