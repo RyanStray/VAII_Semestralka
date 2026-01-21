@@ -58,54 +58,59 @@ export default function Index() {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Customers" />
+            <div className='padding'>
+                <Head title="Customers" />
 
-            <div>
-                {flash.message && (
-                    <Alert>
-                        <ThumbsUp />
-                        <AlertTitle>{flash.message}</AlertTitle>
-                    </Alert>
-                )}
-            </div>
+                <div>
+                    {flash.message && (
+                        <Alert>
+                            <ThumbsUp />
+                            <AlertTitle>{flash.message}</AlertTitle>
+                        </Alert>
+                    )}
+                </div>
 
-            <div className='m-6'>
-                <Link href={route('customers.add')}><Button className='nav-button'>Add new Customer</Button></Link>
-            </div>
-            <div className='m-2'>
-                {customers.length > 0 && (
-                    <Table>
-                        <TableCaption>A list of your Customers.</TableCaption>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>#</TableHead>
-                                <TableHead>Name</TableHead>
-                                <TableHead>email</TableHead>
-                                <TableHead>phone</TableHead>
-                                <TableHead>company</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {customers.map((customers) => (
-                                <TableRow >
-                                    <TableCell className="font-medium">{customers.id}.</TableCell>
+                <div className='m-6'>
+                    <Link href={route('customers.add')}><Button className='nav-button'>Add new Customer</Button></Link>
+                </div>
+                <div className='m-2'>
+                    {customers.length > 0 && (
+                        <Table>
+                            <TableCaption>A list of your Customers.</TableCaption>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>#</TableHead>
+                                    <TableHead>Name</TableHead>
+                                    <TableHead>email</TableHead>
+                                    <TableHead>phone</TableHead>
+                                    <TableHead>company</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {customers.map((customers) => (
+                                    <TableRow>
+                                        <TableCell className="font-medium">{customers.id}.</TableCell>
 
-                                    <TableCell>{(customers.title?customers.title:"") + " " +  customers.name + " " + customers.surname}</TableCell>
-                                    <TableCell>{customers.email}</TableCell>
-                                    <TableCell>{customers.phone}</TableCell>
-                                    <TableCell>{customers.company}</TableCell>
-                                    <TableCell className='space-x-1'>
-                                        <Link href = {route('customers.edit', customers.id)}><Button className='nav-button'>Edit</Button></Link>
-                                    </TableCell>
-                                    <TableCell><Button disabled={processing} onClick={() => handleDelete(customers.id, customers.name +  " " + customers.surname)} className='delete-button'>Delete</Button></TableCell>
-                                </TableRow >
-                            ))}
+                                        <TableCell>{(customers.title ? customers.title : "") + " " + customers.name + " " + customers.surname}</TableCell>
+                                        <TableCell>{customers.email}</TableCell>
+                                        <TableCell>{customers.phone}</TableCell>
+                                        <TableCell>{customers.company}</TableCell>
+                                        <TableCell className='space-x-1'>
+                                            <Link href={route('customers.edit', customers.id)}><Button
+                                                className='nav-button'>Edit</Button></Link>
+                                        </TableCell>
+                                        <TableCell><Button disabled={processing}
+                                                           onClick={() => handleDelete(customers.id, customers.name + " " + customers.surname)}
+                                                           className='delete-button'>Delete</Button></TableCell>
+                                    </TableRow>
+                                ))}
 
-                        </TableBody>
-                    </Table>
-                )}
-            </div>
+                            </TableBody>
+                        </Table>
+                    )}
+                </div>
+                </div>
         </AppLayout>
-    );
+);
 }
 

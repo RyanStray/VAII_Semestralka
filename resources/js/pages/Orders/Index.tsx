@@ -60,8 +60,9 @@ export default function Index() {
     //let selectedLine: number = 0;
 
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Orders" />
+        <AppLayout breadcrumbs={breadcrumbs} >
+            <div className='padding'>
+            <Head title="Orders"/>
 
             <div>
                 {flash.message && (
@@ -116,6 +117,7 @@ export default function Index() {
                         </TableBody>
                     </Table>
                 )}
+            </div>
             </div>
         </AppLayout>
     );

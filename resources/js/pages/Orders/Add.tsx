@@ -167,7 +167,6 @@ export default function Index() {
     const [customers, setCustomers] = useState<Customer[]>([])
     const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null)
 
-    // Load initial customers on mount
     useEffect(() => {
         fetch('/api/customers')
             .then((res) => res.json())
@@ -199,120 +198,122 @@ export default function Index() {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Add Order" />
+            <div className='padding'>
+                <Head title="Add Order" />
 
-            <div className="w-8/12 p-4">
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    {Object.keys(errors).length > 0 && (
-                        <Alert>
-                            <TriangleAlert />
-                            <AlertTitle>Required field missing!</AlertTitle>
-                            <AlertDescription>
-                                <ul>
-                                    {Object.entries(errors).map(
-                                        ([key, message]) => (
-                                            <li key={key}>
-                                                {message.replace(
-                                                    ' i d ',
-                                                    ' ID ',
-                                                )}
-                                            </li>
-                                        ),
-                                    )}
-                                </ul>
-                            </AlertDescription>
-                        </Alert>
-                    )}
-                    <Label htmlFor="Customer ID">Customer</Label>
+                <div className="w-8/12 p-4">
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        {Object.keys(errors).length > 0 && (
+                            <Alert>
+                                <TriangleAlert />
+                                <AlertTitle>Required field missing!</AlertTitle>
+                                <AlertDescription>
+                                    <ul>
+                                        {Object.entries(errors).map(
+                                            ([key, message]) => (
+                                                <li key={key}>
+                                                    {message.replace(
+                                                        ' i d ',
+                                                        ' ID ',
+                                                    )}
+                                                </li>
+                                            ),
+                                        )}
+                                    </ul>
+                                </AlertDescription>
+                            </Alert>
+                        )}
+                        <Label htmlFor="Customer ID">Customer</Label>
 
-                    <div className="flex w-full space-x-1">
-                        <div className="flex-1">
-                            <CustomerSelection
-                                customers={customers}
-                                selectedCustomer={selectedCustomer}
-                                onSelect={(customer) => {
-                                    setSelectedCustomer(customer)
-                                    setData('customerID', customer.value)
-                                }}
-                            />
+                        <div className="flex w-full space-x-1">
+                            <div className="flex-1">
+                                <CustomerSelection
+                                    customers={customers}
+                                    selectedCustomer={selectedCustomer}
+                                    onSelect={(customer) => {
+                                        setSelectedCustomer(customer)
+                                        setData('customerID', customer.value)
+                                    }}
+                                />
+                            </div>
                         </div>
-                    </div>
 
-                    <div>
-                        <Label htmlFor="Order">Order ID</Label>
-                        <Input
-                            placeholder="XXXX-XXXX"
-                            value={data.orderID}
-                            onChange={(e) => setData('orderID', e.target.value)}
-                        ></Input>
-                    </div>
+                        <div>
+                            <Label htmlFor="Order">Order ID</Label>
+                            <Input
+                                placeholder="XXXX-XXXX"
+                                value={data.orderID}
+                                onChange={(e) => setData('orderID', e.target.value)}
+                            ></Input>
+                        </div>
 
-                    <div>
-                        <Label htmlFor="Product ID">Product ID</Label>
-                        <Input
-                            placeholder="XXXX-XXXX"
-                            value={data.productID}
-                            onChange={(e) =>
-                                setData('productID', e.target.value)
-                            }
-                        ></Input>
-                    </div>
-
-                    <div>
-                        <Label htmlFor="Transaction ID">Transaction ID</Label>
-                        <Input
-                            placeholder="XXXX-XXXX"
-                            value={data.transactionID}
-                            onChange={(e) =>
-                                setData('transactionID', e.target.value)
-                            }
-                        ></Input>
-                    </div>
-
-                    <div>
-                        <Label htmlFor="Price">Order Price</Label>
-                        <Input
-                            placeholder="0,0 €"
-                            value={data.price}
-                            onChange={(e) => setData('price', e.target.value)}
-                        ></Input>
-                    </div>
-
-                    <div>
-                        <Label htmlFor="wasPayed">Was paid</Label>
-
-                        <div className="mt-1">
-                            <Checkbox
-                                checked={data.wasPayed}
-                                onCheckedChange={(checked) =>
-                                    setData('wasPayed', Boolean(checked))
+                        <div>
+                            <Label htmlFor="Product ID">Product ID</Label>
+                            <Input
+                                placeholder="XXXX-XXXX"
+                                value={data.productID}
+                                onChange={(e) =>
+                                    setData('productID', e.target.value)
                                 }
-                            />
+                            ></Input>
                         </div>
-                    </div>
 
-                    <div>
-                        <Label htmlFor="Description">Description</Label>
-                        <Textarea
-                            placeholder="Description"
-                            value={data.description}
-                            onChange={(e) =>
-                                setData('description', e.target.value)
-                            }
-                        ></Textarea>
-                    </div>
+                        <div>
+                            <Label htmlFor="Transaction ID">Transaction ID</Label>
+                            <Input
+                                placeholder="XXXX-XXXX"
+                                value={data.transactionID}
+                                onChange={(e) =>
+                                    setData('transactionID', e.target.value)
+                                }
+                            ></Input>
+                        </div>
 
-                    <div className="space-x-1">
-                        <Button className="save-button m-2">Save</Button>
+                        <div>
+                            <Label htmlFor="Price">Order Price</Label>
+                            <Input
+                                placeholder="0,0 €"
+                                value={data.price}
+                                onChange={(e) => setData('price', e.target.value)}
+                            ></Input>
+                        </div>
 
-                        <Link href="/orders">
-                            <Button className="cancel-button m-2">
-                                Cancel
-                            </Button>
-                        </Link>
-                    </div>
-                </form>
-            </div>
+                        <div>
+                            <Label htmlFor="wasPayed">Was paid</Label>
+
+                            <div className="mt-1">
+                                <Checkbox
+                                    checked={data.wasPayed}
+                                    onCheckedChange={(checked) =>
+                                        setData('wasPayed', Boolean(checked))
+                                    }
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <Label htmlFor="Description">Description</Label>
+                            <Textarea
+                                placeholder="Description"
+                                value={data.description}
+                                onChange={(e) =>
+                                    setData('description', e.target.value)
+                                }
+                            ></Textarea>
+                        </div>
+
+                        <div className="space-x-1">
+                            <Button className="save-button m-2">Save</Button>
+
+                            <Link href="/orders">
+                                <Button className="cancel-button m-2">
+                                    Cancel
+                                </Button>
+                            </Link>
+                        </div>
+                    </form>
+                </div>
+                </div>
         </AppLayout>
-    );
+);
 }

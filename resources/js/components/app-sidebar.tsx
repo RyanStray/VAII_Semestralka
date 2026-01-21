@@ -42,11 +42,11 @@ const mainNavItems: NavItem[] = [
         href: '/company',
         icon: Building2,
     },
-    //{
-    //    title: 'Employees',
-    //    href: '/employees',
-    //    icon: IdCard,
-    //},
+    {
+        title: 'Employees',
+        href: '/employees',
+        icon: IdCard,
+    },
 ];
 
 const footerNavItems: NavItem[] = [
@@ -64,7 +64,7 @@ const footerNavItems: NavItem[] = [
 
 export function AppSidebar() {
     return (
-        <Sidebar collapsible="icon" variant="inset">
+        <Sidebar collapsible="icon" variant="inset" className='sidebar'>
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>

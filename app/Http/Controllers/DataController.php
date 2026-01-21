@@ -13,34 +13,18 @@ use Illuminate\Support\Facades\Route;
 
 class DataController extends Controller
 {
+
+
+    //===================================================    Orders   ===============================================================
+
     public function orders() {
         $orders = Orders::with('customer')->get();
         return Inertia::render('Orders/Index', compact('orders'));
     }
 
-    public function customers() {
-        $customers = Customers::all();
-        return Inertia::render('Customers/Index', compact('customers'));
-    }
-
-    public function invoice() {
-        return Inertia::render('Invoice/Index', []);
-    }
-
     public function ordersAdd() {
         return Inertia::render('Orders/Add', []);
     }
-
-    public function customersAdd() {
-        return Inertia::render('Customers/Add', []);
-    }
-
-    public function invoiceAdd() {
-        return Inertia::render('Invoice/Add', []);
-    }
-
-
-    //===================================================    Orders   ===============================================================
 
     public function storeOrder(Request $request)
     {
@@ -89,6 +73,16 @@ class DataController extends Controller
 
 
     //===================================================    Customers   ===============================================================
+
+    public function customers() {
+        $customers = Customers::all();
+        return Inertia::render('Customers/Index', compact('customers'));
+    }
+
+
+    public function customersAdd() {
+        return Inertia::render('Customers/Add', []);
+    }
 
     public function storeCustomers(Request $request)
     {
@@ -170,5 +164,6 @@ class DataController extends Controller
     {
         return Customers::select('id', 'title', 'name', 'surname')->get();
     }
+
 
 }
