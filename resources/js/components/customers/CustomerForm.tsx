@@ -12,7 +12,7 @@ type Props = {
     showCancel?: boolean
 }
 
-export function CustomerForm({ onSuccess, showCancel = true }: Props) {
+export function CustomerForm({ onSuccess, showCancel = false }: Props) {
     const { data, setData, post, processing, errors } = useForm({
         title: '',
         name: '',

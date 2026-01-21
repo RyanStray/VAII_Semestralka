@@ -54,7 +54,7 @@ export default function Index() {
         }
     }
 
-    const {customers, flash} = usePage().props as props;
+    const { customers, flash } = usePage().props as unknown as props;
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>

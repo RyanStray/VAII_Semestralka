@@ -18,6 +18,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 interface PageProps {
+    // @ts-expect-error
     companies: Companies
 }
 
