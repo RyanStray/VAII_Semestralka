@@ -90,7 +90,7 @@ export default function Index() {
                                 <TableRow >
                                     <TableCell className="font-medium">{customers.id}.</TableCell>
 
-                                    <TableCell>{customers.title + " " +  customers.name + " " + customers.surname}</TableCell>
+                                    <TableCell>{(customers.title?customers.title:"") + " " +  customers.name + " " + customers.surname}</TableCell>
                                     <TableCell>{customers.email}</TableCell>
                                     <TableCell>{customers.phone}</TableCell>
                                     <TableCell>{customers.company}</TableCell>

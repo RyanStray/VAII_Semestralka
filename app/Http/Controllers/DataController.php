@@ -7,11 +7,14 @@ use App\Models\Customers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
+use Illuminate\Support\Facades\Route;
+
+
 
 class DataController extends Controller
 {
     public function orders() {
-        $orders = Orders::all();
+        $orders = Orders::with('customer')->get();
         return Inertia::render('Orders/Index', compact('orders'));
     }
 
@@ -90,7 +93,7 @@ class DataController extends Controller
     public function storeCustomers(Request $request)
     {
         //dd($request); //dump data
-
+        $redirect = $request->query('redirect', false);
         $request->validate([
             'title' =>  'nullable|string|max:50',
             'name' =>  'required|string|max:255',
@@ -113,10 +116,13 @@ class DataController extends Controller
 
         Customers::create($request->all());
 
-        if (Route::currentRouteName() === 'customers.add') {
-            return redirect()->route('customers.index')
-                ->with('message', 'Customer successfully saved.');
+        //dd(Route::currentRouteName()); // "customers.store" // app\Http\Controllers\DataController.php:119
+
+
+        if ($redirect) {
+            return redirect()->route('customers.index')->with('message', 'Customer successfully saved.');
         }
+
         return redirect()->back()->with('message', 'Customer successfully saved.');
     }
 

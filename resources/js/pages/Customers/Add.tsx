@@ -29,11 +29,13 @@ export default function Index() {
         company: "",
         position: "",
 
-        description: ""});
+        description: "",
+        companyID: 1, // change late this cant beee
+        });
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        post(route('customers.store'));
+        post(route('customers.store') + '?redirect=1');
         //console.log("1");
         //console.log(data); //Save data
     };

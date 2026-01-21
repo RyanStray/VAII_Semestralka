@@ -32,11 +32,17 @@ interface props{
 interface Orders{
     id: number
     orderID: string
-    productID: string
-    transactionID: string
     price: number
     wasPayed: boolean
     description: string
+    customer: Customer | null
+}
+
+interface Customer {
+    id: number
+    title: string
+    name: string
+    surname: string
 }
 
 export default function Index() {
@@ -80,8 +86,7 @@ export default function Index() {
                             <TableRow>
                                 <TableHead>#</TableHead>
                                 <TableHead>Order ID</TableHead>
-                                <TableHead>Product ID</TableHead>
-                                <TableHead>Transaction ID</TableHead>
+                                <TableHead>Customer</TableHead>
                                 <TableHead>Price</TableHead>
                                 <TableHead>Description</TableHead>
                                 <TableHead className="text-right w-[5px]">Was payed</TableHead>
@@ -92,12 +97,11 @@ export default function Index() {
                         <TableBody>
                             {orders.map((order) => (
                                 <TableRow >
-                                          {/*onClick=() => selectedLine === order.id*/}
                                     <TableCell className="font-medium">{order.id}.</TableCell>
 
                                     <TableCell>{order.orderID}</TableCell>
-                                    <TableCell>{order.productID}</TableCell>
-                                    <TableCell>{order.transactionID}</TableCell>
+                                    <TableCell>{order.customer
+                                        ? order.customer.title?order.customer.title + " ":"" + order.customer.name + order.customer.surname: ''}</TableCell>
 
                                     <TableCell>{order.price}€</TableCell>
                                     <TableCell>{order.description}</TableCell>

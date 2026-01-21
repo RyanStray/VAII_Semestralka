@@ -27,11 +27,11 @@ const mainNavItems: NavItem[] = [
         href: '/orders',
         icon: PackageSearch,
     },
-    {
-        title: 'Invoice',
-        href: '/invoice',
-        icon: Newspaper,
-    },
+    //{
+    //    title: 'Invoice',
+    //    href: '/invoice',
+    //    icon: Newspaper,
+    //},
     {
         title: 'Customers',
         href: '/customers',
@@ -42,11 +42,11 @@ const mainNavItems: NavItem[] = [
         href: '/company',
         icon: Building2,
     },
-    {
-        title: 'Employees',
-        href: '/employees',
-        icon: IdCard,
-    },
+    //{
+    //    title: 'Employees',
+    //    href: '/employees',
+    //    icon: IdCard,
+    //},
 ];
 
 const footerNavItems: NavItem[] = [

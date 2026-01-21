@@ -1,41 +1,52 @@
+/*
+
+ interface PageProps {
+    customer: Customer
+}
+
+export default function Index() {
+
+    const { customer } = usePage().props as { customer: Customer }
+
+    const {data, setData, put, processing, errors } = useForm({
+        title: customer.title ?? '',
+        name: customer.name,
+        surname: customer.surname,
+
+        email: customer.email ?? '',
+        phone: customer.phone ?? '',
+
+        company: customer.company ?? '',
+        position: customer.position ?? '',
+
+        description: customer.description ?? ''});
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        put(route('customers.update', customer.id));
+    };
+
+*/
+
+
 
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { route } from 'ziggy-js';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-
 import { TriangleAlert } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Edit Customer',
-        href: '/customers/edit',
+        title: 'Add Customer',
+        href: '/customers/add',
     },
 ];
-
-interface Customer{
-    id: number
-
-    title: string
-    name: string
-    surname: string
-
-    email: string
-    phone: string
-
-    company: string
-    position: string
-
-    description: string
-
-}
-
 interface PageProps {
     customer: Customer
 }
@@ -123,7 +134,6 @@ export default function Index() {
                         <Input placeholder="Position" value={data.position}
                                onChange={(e) => setData('position', e.target.value)}></Input>
                     </div>
-
                     <div>
                         <Label htmlFor="Description">Description</Label>
                         <Textarea placeholder="Description" value={data.description}
@@ -140,3 +150,4 @@ export default function Index() {
         </AppLayout>
     );
 }
+

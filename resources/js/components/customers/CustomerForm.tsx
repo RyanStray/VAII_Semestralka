@@ -22,6 +22,7 @@ export function CustomerForm({ onSuccess, showCancel = true }: Props) {
         company: '',
         position: '',
         description: '',
+        companyID: 1, // change late this cant beee
     })
 
     const handleSubmit = (e: React.FormEvent) => {

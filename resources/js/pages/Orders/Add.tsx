@@ -71,11 +71,14 @@ export function CustomerSelection({ customers: initialCustomers, selectedCustome
         const data = await res.json()
         const mapped = data.map((c: any) => ({
             value: c.id,
-            label: `${c.title} ${c.name} ${c.surname}`,
+            label: `${c.title?c.title:""} ${c.name} ${c.surname}`,
         }))
         setCustomers(mapped)
         return mapped
     }
+    useEffect(() => {
+        loadCustomers()
+    }, [])
 
     return (
         <div className="flex space-x-2 items-start">
@@ -85,11 +88,13 @@ export function CustomerSelection({ customers: initialCustomers, selectedCustome
                     <PopoverTrigger asChild>
                         <Button variant="outline" className="w-full justify-between">
                             {selectedCustomer?.label ?? 'Select customer'}
-                            <ChevronDown className="ml-2 h-4 w-4 text-gray-400" />
+                            <ChevronDown className="ml-2 h-4 text-gray-400" />
                         </Button>
                     </PopoverTrigger>
 
-                    <PopoverContent className="p-0" side="bottom" align="start">
+
+                    <PopoverContent className="p-0 ml-2
+                     w-[50vw]" side="bottom" align="start">
                         <Command>
                             <CommandInput
                                 placeholder="Search customer..."
@@ -106,6 +111,7 @@ export function CustomerSelection({ customers: initialCustomers, selectedCustome
                                                 onSelect(customer)
                                                 setOpen(false)
                                             }}
+
                                         >
                                             {customer.label}
                                         </CommandItem>
@@ -137,7 +143,7 @@ export function CustomerSelection({ customers: initialCustomers, selectedCustome
                     side="left"
                     align="start"
                     collisionPadding={16}
-                    className="w-[90vw] max-w-3xl max-h-[85vh] overflow-y-auto p-4"
+                    className="w-[50vw] max-h-[85vh] overflow-y-auto p-4"
                 >
                     <CustomerForm
                         onSuccess={async () => {
@@ -177,11 +183,13 @@ export default function Index() {
 
     const { data, setData, post, processing, errors } = useForm({
         orderID: '',
+        customerID: '',
         productID: '',
         transactionID: '',
         price: '',
         wasPayed: false,
         description: '',
+        companyID: 1, // change late this cant beee
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -220,9 +228,12 @@ export default function Index() {
                     <div className="flex w-full space-x-1">
                         <div className="flex-1">
                             <CustomerSelection
-                                customers={customers}                // initial list
-                                selectedCustomer={selectedCustomer} // currently selected
-                                onSelect={(customer) => setSelectedCustomer(customer)} // update selected
+                                customers={customers}
+                                selectedCustomer={selectedCustomer}
+                                onSelect={(customer) => {
+                                    setSelectedCustomer(customer)
+                                    setData('customerID', customer.value)
+                                }}
                             />
                         </div>
                     </div>
